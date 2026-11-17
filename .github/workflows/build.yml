@@ -8,11 +8,11 @@ jobs:
       - run: unzip horizon-x.zip
       - uses: actions/setup-java@v4
         with: { distribution: temurin, java-version: 17 }
-      - uses: android-actions/setup-android@v3
       - name: SDK + NDK
         run: |
-          yes | sdkmanager --licenses >/dev/null
-          sdkmanager "platforms;android-34" "build-tools;34.0.0" "ndk;26.1.10909125"
+          SM=/usr/local/lib/android/sdk/cmdline-tools/latest/bin/sdkmanager
+          yes | $SM --licenses >/dev/null || true
+          $SM "platforms;android-34" "build-tools;34.0.0" "ndk;26.1.10909125"
       - uses: dtolnay/rust-toolchain@stable
         with: { targets: aarch64-linux-android }
       - run: cargo install cargo-ndk
